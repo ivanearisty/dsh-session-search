@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-omnisearch",
-  "version": "0.1.2",
+  "version": "0.1.0",
   "description": "Full-text search across every DeepSeek Harness conversation \u2014 MiniSearch index on the host, Option+K palette in the browser, jump straight to the matching message.",
   "keywords": [
     "deepseek",

@@ -133,7 +133,7 @@ export function apply(ctx: ClientContext): void {
       window.removeEventListener('keydown', onKeyDown, true)
       if (timer !== undefined) clearTimeout(timer)
     }
-  }, 'kepler-dsh: search chord')
+  }, 'dsh-omnisearch: search chord')
 
   // Public face for sibling plugins (the command palette lists "Search messages…").
   ctx.effect(() => {
@@ -144,7 +144,7 @@ export function apply(ctx: ClientContext): void {
       reveal: (hit) => revealMessage(document, hit, () => sessions.binding(hit.sessionId as SessionId)?.session),
     }
     return () => { delete w.__dshOmnisearch }
-  }, 'kepler-dsh: search window face')
+  }, 'dsh-omnisearch: window face')
 
   ctx.slots.inject('shell.overlay', () => ctx.slots.register({
     name: 'shell.overlay',
