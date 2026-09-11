@@ -1,0 +1,4 @@
+# Full-text session search: MiniSearch host index + Option+K palette
+- insert:
+    - id: omnisearch
+      name: dsh-plugin-omnisearch
