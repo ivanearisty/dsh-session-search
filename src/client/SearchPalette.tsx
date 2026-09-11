@@ -1,5 +1,6 @@
 /**
- * The search palette: a centered input over a result list, omnisearch-style
+ * The search palette: a centered input over a result list, in the style of
+ * obsidian-omnisearch
  * (query at the top, excerpts with highlighted terms, session title + role +
  * time per row, arrow/Enter/Escape keyboard model). Pure React on the
  * --dsw-* tokens; no dependencies beyond React so the boot bundle stays
@@ -47,7 +48,7 @@ let cssInjected = false
 function ensureCss(): void {
   if (cssInjected || typeof document === 'undefined') return
   const style = document.createElement('style')
-  style.setAttribute('data-plugin', 'dsh-plugin-omnisearch')
+  style.setAttribute('data-plugin', 'dsh-session-search')
   style.textContent = CSS
   document.head.appendChild(style)
   cssInjected = true
@@ -144,12 +145,12 @@ export function SearchPalette({ useSearch, setQuery, close, pick, resurrect }: S
             spellCheck={false}
             autoComplete="off"
             aria-label="Search query"
-            aria-controls="dsh-omnisearch-results"
+            aria-controls="dsh-session-search-results"
             onChange={(e) => { setQuery(e.currentTarget.value) }}
           />
           <span className="ks-kbd">esc</span>
         </div>
-        <div className="ks-list" id="dsh-omnisearch-results" role="listbox" ref={list}>
+        <div className="ks-list" id="dsh-session-search-results" role="listbox" ref={list}>
           {query.trim().length === 0 && <div className="ks-empty">Type to search across {sessionsIndexed} sessions · {documents} messages</div>}
           {query.trim().length > 0 && status === 'ready' && flat.length === 0 && <div className="ks-empty">No matches for “{query}”</div>}
           {status === 'error' && <div className="ks-empty" role="alert">{error}</div>}

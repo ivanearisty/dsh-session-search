@@ -55,7 +55,7 @@ function messageText(event: SessionEvent): { role: 'user' | 'assistant'; text: s
   if (event.type === 'user/message') {
     // Only human-typed prompts: plugin snapshots (system prompt sections,
     // steering, runtime context) are noise for a "what did we talk about"
-    // search — the same rule omnisearch applies to front-matter.
+    // search — the same rule obsidian-omnisearch applies to front-matter.
     const source = (event.data as { source?: { kind?: string } }).source
     if (source?.kind !== 'user') return undefined
     return { role: 'user', text: blocksText(event.data.content) }
@@ -82,7 +82,7 @@ const TITLE_FALLBACK = (header: SessionHeader): string => {
   return base === undefined ? '(untitled)' : base
 }
 
-/** MiniSearch options mirroring omnisearch: prefix, fuzzy 0.2, title boost. */
+/** MiniSearch options mirroring obsidian-omnisearch: prefix, fuzzy 0.2, title boost. */
 const SEARCH_OPTIONS: SearchOptions = {
   prefix: true,
   fuzzy: 0.2,
@@ -191,7 +191,7 @@ export class SessionIndex {
       const generic = event as { type: string; data?: unknown }
       if (generic.type === 'session/title') {
         // The session's CURRENT name is what every document carries
-        // (omnisearch shows a note's present title, not the one it had when
+        // (obsidian-omnisearch shows a note's present title, not the one it had when
         // a paragraph was written); a later title event restamps the lot.
         const next = (generic.data as { title?: string } | undefined)?.title
         if (typeof next === 'string' && next.length > 0 && next !== title) {
@@ -287,7 +287,7 @@ export class SessionIndex {
   }
 }
 
-/** ~160-char window around the first matched term (omnisearch's excerpt rule). */
+/** ~160-char window around the first matched term (obsidian-omnisearch's excerpt rule). */
 export function excerpt(text: string, terms: readonly string[]): string {
   const flat = text.replace(/\s+/g, ' ').trim()
   const lower = flat.toLowerCase()

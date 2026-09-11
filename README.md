@@ -1,10 +1,13 @@
-# dsh-plugin-omnisearch
+# dsh-session-search
 
 Full-text search across **every** DeepSeek Harness conversation. Press `⌥K`
 (`Alt+K`), type, and jump straight to the message — not just the session.
 
-Inspired by [obsidian-omnisearch](https://github.com/scambier/obsidian-omnisearch)
-and built on the same engine, [MiniSearch](https://github.com/lucaong/minisearch).
+Search behaviour is modelled on
+[obsidian-omnisearch](https://github.com/scambier/obsidian-omnisearch) — an
+excellent plugin for a different app — and built on the same engine,
+[MiniSearch](https://github.com/lucaong/minisearch). This project is not
+affiliated with it and does not reuse its name.
 
 ## Why
 
@@ -15,7 +18,7 @@ so you can find that command you ran three weeks ago in a session you never name
 ## Install
 
 ```sh
-dsh plugin --profile web add dsh-plugin-omnisearch
+dsh plugin --profile web add dsh-session-search
 ```
 
 Then restart the harness (the host half builds its index at boot).
@@ -59,7 +62,7 @@ queries answer in single-digit milliseconds.
 - Reads your local session logs through the harness's own session-store
   service. **Nothing leaves your machine**; there is no network call, no
   telemetry, and no external service.
-- Registers one private host channel (`/dsh-omnisearch`) with `search` and
+- Registers one private host channel (`/dsh-session-search`) with `search` and
   `status` endpoints, plus one browser overlay and one `keydown` listener.
 
 ## Optional companion

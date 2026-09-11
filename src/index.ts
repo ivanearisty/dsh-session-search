@@ -1,5 +1,5 @@
 /**
- * dsh-plugin-omnisearch host half: the full-text index and its RPC channel.
+ * dsh-session-search host half: the full-text index and its RPC channel.
  *
  * The index is a MiniSearch instance (the engine behind obsidian-omnisearch)
  * over one document per human/assistant message across every session the
@@ -7,14 +7,14 @@
  * built once at boot from the persistence store (~70 sessions / 1 MB of
  * message text indexes in about a second) and then kept current from
  * the `session/event` firehose — no rescans, no timers. The browser never
- * downloads the index; queries go over `/dsh-omnisearch` (`search`,
+ * downloads the index; queries go over `/dsh-session-search` (`search`,
  * `status`) and return small snippet rows.
  */
 import type { Context } from '@deepseek-ai/cordis'
 import { SessionIndex } from './indexer.js'
 import type { SearchHit } from './indexer.js'
 
-const CHANNEL = '/dsh-omnisearch'
+const CHANNEL = '/dsh-session-search'
 
 interface Envelope {
   ok: true
@@ -25,11 +25,11 @@ interface Failure {
   error: { code: string; message: string }
 }
 
-export const name = 'dsh-plugin-omnisearch'
+export const name = 'dsh-session-search'
 export const inject = ['connection', 'sessions']
 
 export function apply(ctx: Context): void {
-  const log = ctx.logger('omnisearch')
+  const log = ctx.logger('session-search')
   const index = new SessionIndex()
 
   // Boot build from persistence (optional service: absent = live-only index).
@@ -71,6 +71,6 @@ export function apply(ctx: Context): void {
         }
       },
       { authority: 'trusted-host' } as never,
-    ), 'dsh-plugin-omnisearch: channel')
+    ), 'dsh-session-search: channel')
   })
 }

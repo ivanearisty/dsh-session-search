@@ -1,9 +1,9 @@
 /**
- * dsh-plugin-omnisearch, browser half: the Cmd+K search palette.
+ * dsh-session-search, browser half: the Cmd+K search palette.
  *
  * One `shell.overlay` entry whose visibility rides a snapshot store; one
  * capturing keydown on `window` for the chord. Queries debounce 120 ms and
- * go host-side over `/dsh-omnisearch` (the index never reaches the tab).
+ * go host-side over `/dsh-session-search` (the index never reaches the tab).
  * Picking a row opens the session and, once the conversation has rendered,
  * scrolls to the message and flashes it.
  *
@@ -22,7 +22,7 @@ import { SearchPalette } from './SearchPalette.js'
 import type { SearchHit, SearchState } from './types.js'
 import { revealMessage, type PagerLike } from './reveal.js'
 
-const CHANNEL = '/dsh-omnisearch'
+const CHANNEL = '/dsh-session-search'
 
 export const inject = ['slots', 'connection', 'sessions', 'workspaces']
 
@@ -133,22 +133,22 @@ export function apply(ctx: ClientContext): void {
       window.removeEventListener('keydown', onKeyDown, true)
       if (timer !== undefined) clearTimeout(timer)
     }
-  }, 'dsh-omnisearch: search chord')
+  }, 'dsh-session-search: chord')
 
   // Public face for sibling plugins (the command palette lists "Search messages…").
   ctx.effect(() => {
-    const w = window as unknown as { __dshOmnisearch?: { open: () => void; close: () => void; reveal: (hit: SearchHit) => Promise<boolean> } }
-    w.__dshOmnisearch = {
+    const w = window as unknown as { __dshSessionSearch?: { open: () => void; close: () => void; reveal: (hit: SearchHit) => Promise<boolean> } }
+    w.__dshSessionSearch = {
       open, close,
       // `reveal` is the smoke-test seam (check-search-palette.mjs drives it directly).
       reveal: (hit) => revealMessage(document, hit, () => sessions.binding(hit.sessionId as SessionId)?.session),
     }
-    return () => { delete w.__dshOmnisearch }
-  }, 'dsh-omnisearch: window face')
+    return () => { delete w.__dshSessionSearch }
+  }, 'dsh-session-search: window face')
 
   ctx.slots.inject('shell.overlay', () => ctx.slots.register({
     name: 'shell.overlay',
-    id: 'dsh-omnisearch',
+    id: 'dsh-session-search',
     order: 910,
     inject: () => ({
       hooks: { search: store },

@@ -1,5 +1,5 @@
 {
-  "name": "dsh-plugin-omnisearch",
+  "name": "dsh-session-search",
   "version": "0.1.0",
   "description": "Full-text search across every DeepSeek Harness conversation \u2014 MiniSearch index on the host, Option+K palette in the browser, jump straight to the matching message.",
   "keywords": [
@@ -10,20 +10,19 @@
     "search",
     "full-text-search",
     "minisearch",
-    "omnisearch",
     "sessions",
-    "palette",
+    "history",
     "ui"
   ],
   "license": "MIT",
   "author": "Ivan Aristy (https://github.com/ivanearisty)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ivanearisty/dsh-plugin-omnisearch.git"
+    "url": "git+https://github.com/ivanearisty/dsh-session-search.git"
   },
-  "homepage": "https://github.com/ivanearisty/dsh-plugin-omnisearch#readme",
+  "homepage": "https://github.com/ivanearisty/dsh-session-search#readme",
   "bugs": {
-    "url": "https://github.com/ivanearisty/dsh-plugin-omnisearch/issues"
+    "url": "https://github.com/ivanearisty/dsh-session-search/issues"
   },
   "type": "module",
   "engines": {

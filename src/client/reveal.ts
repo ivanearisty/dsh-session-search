@@ -10,14 +10,14 @@
 import type { SearchHit } from './types.js'
 
 const FLASH_CSS = `
-@keyframes dsh-omnisearch-flash { 0% { box-shadow: 0 0 0 3px var(--dsw-alias-brand-primary); } 100% { box-shadow: 0 0 0 0 transparent; } }
-.dsh-omnisearch-flash { animation: dsh-omnisearch-flash 1.6s ease-out 1; border-radius: 8px; }
+@keyframes dsh-session-search-flash { 0% { box-shadow: 0 0 0 3px var(--dsw-alias-brand-primary); } 100% { box-shadow: 0 0 0 0 transparent; } }
+.dsh-session-search-flash { animation: dsh-session-search-flash 1.6s ease-out 1; border-radius: 8px; }
 `
 let cssInjected = false
 function ensureCss(doc: Document): void {
   if (cssInjected) return
   const style = doc.createElement('style')
-  style.setAttribute('data-plugin', 'dsh-plugin-omnisearch-reveal')
+  style.setAttribute('data-plugin', 'dsh-session-search-reveal')
   style.textContent = FLASH_CSS
   doc.head.appendChild(style)
   cssInjected = true
@@ -62,8 +62,8 @@ export async function revealMessage(doc: Document, hit: SearchHit, pager: () => 
   if (needle.length < 8) return false
   const flash = (node: HTMLElement): true => {
     node.scrollIntoView({ block: 'center', behavior: 'smooth' })
-    node.classList.add('dsh-omnisearch-flash')
-    setTimeout(() => { node.classList.remove('dsh-omnisearch-flash') }, 1800)
+    node.classList.add('dsh-session-search-flash')
+    setTimeout(() => { node.classList.remove('dsh-session-search-flash') }, 1800)
     return true
   }
   // Phase 1: wait for the (possibly just-switched) session to be OPEN — its
@@ -89,7 +89,7 @@ export async function revealMessage(doc: Document, hit: SearchHit, pager: () => 
     try {
       await p.loadOlder()
     } catch (error) {
-      console.warn('[omnisearch] loadOlder failed', error)
+      console.warn('[session-search] loadOlder failed', error)
       break
     }
     // The prepend lands on the next React commit; give it a frame or two.
