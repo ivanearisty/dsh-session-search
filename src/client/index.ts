@@ -3,14 +3,14 @@
  *
  * One `shell.overlay` entry whose visibility rides a snapshot store; one
  * capturing keydown on `window` for the chord. Queries debounce 120 ms and
- * go host-side over `/kepler-dsh-search` (the index never reaches the tab).
+ * go host-side over `/dsh-omnisearch` (the index never reaches the tab).
  * Picking a row opens the session and, once the conversation has rendered,
  * scrolls to the message and flashes it.
  *
- * Chord: Option+K (Alt+K) — kepler's own convention, matching the sibling
- * hotkeys plugin's Option chords (⌥C/T/F/U/G, ⌥1-9, ⌥N/R/B). Cmd+K belongs
- * to the command palette. Matched on `event.code` so Option+K never types
- * its macOS dead-key glyph ("˚") into the composer. Escape closes.
+ * Chord: Option+K (Alt+K). Cmd+K is left to the command palette, which is
+ * where every other app puts its "do anything" bar. Matched on `event.code`
+ * so Option+K never types its macOS dead-key glyph ("˚") into the composer.
+ * Escape closes.
  */
 import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
 import type {} from '@deepseek-ai/dsh-client-ui-layout/client'

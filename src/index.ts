@@ -5,9 +5,9 @@
  * over one document per human/assistant message across every session the
  * deployment persists, plus every live session's in-memory tail. It is
  * built once at boot from the persistence store (~70 sessions / 1 MB of
- * message text on kepler: well under a second) and then kept current from
+ * message text indexes in about a second) and then kept current from
  * the `session/event` firehose — no rescans, no timers. The browser never
- * downloads the index; queries go over `/kepler-dsh-search` (`search`,
+ * downloads the index; queries go over `/dsh-omnisearch` (`search`,
  * `status`) and return small snippet rows.
  */
 import type { Context } from '@deepseek-ai/cordis'
