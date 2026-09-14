@@ -1,4 +1,10 @@
-# Full-text session search: MiniSearch host index + Option+K palette
+# dsh-session-search bundle patch: mounts the full-text session index (host)
+# and the Option+K search palette (browser). Installed with:
+#
+#   dsh plugin --profile web add dsh-session-search
+#
+# The entry id is the package name, so it cannot collide with another
+# plugin's entry in the shared loader tree.
 - insert:
-    - id: session-search
+    - id: dsh-session-search
       name: dsh-session-search

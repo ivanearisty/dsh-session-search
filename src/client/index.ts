@@ -14,11 +14,17 @@
  */
 import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
 import type {} from '@deepseek-ai/dsh-client-ui-layout/client'
+// Type-only: brings the settings slot declarations into this program. The
+// settings tab is an optional runtime dependency, guarded by ctx.inject.
+import type {} from '@deepseek-ai/dsh-client-ui-settings/client'
+import type {} from '@deepseek-ai/dsh-client-ui-settings-plugins/client'
 import type { Context as ClientContext } from '@deepseek-ai/cordis'
 import type { ConnectionHandle, RpcResult, SessionId } from '@deepseek-ai/dsh-api-remotes/client'
 import { createSnapshotStore, type SnapshotStore } from '@deepseek-ai/dsh-client-runtime/client'
 import { createElement } from 'react'
 import { SearchPalette } from './SearchPalette.js'
+import { SettingsCard } from './SettingsCard.js'
+import { SEARCH_SETTINGS_NAMESPACE } from '../namespace.js'
 import type { SearchHit, SearchState } from './types.js'
 import { revealMessage, type PagerLike } from './reveal.js'
 
@@ -145,6 +151,18 @@ export function apply(ctx: ClientContext): void {
     }
     return () => { delete w.__dshSessionSearch }
   }, 'dsh-session-search: window face')
+
+  // Settings → Plugins card: where users manage everything else they installed.
+  // The card must be registered inside an effect on the INJECTED context:
+  // `slots.inject` returns a disposer that only binds when the owning fiber
+  // owns it, so calling it bare in the inject callback registers nothing.
+  ctx.inject(['slots'], (scoped) => {
+    scoped.effect(() => scoped.slots.inject('settings.plugin.item', () => scoped.slots.register({
+      name: 'settings.plugin.item',
+      key: SEARCH_SETTINGS_NAMESPACE,
+        inject: () => ({ hooks: { search: store } }),
+    }, SettingsCard)), 'dsh-session-search: settings card')
+  })
 
   ctx.slots.inject('shell.overlay', () => ctx.slots.register({
     name: 'shell.overlay',

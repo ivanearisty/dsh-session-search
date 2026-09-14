@@ -72,6 +72,18 @@ installed, hits in **archived** sessions show a Resurrect button. Without it,
 archived sessions still appear, marked 🪦 and not openable. The companion is
 detected at runtime and is in no way required.
 
+## Settings
+
+The plugin registers a `dsh-session-search` settings namespace, so it appears
+as a card under **Settings → Plugins** (showing live index size) like any
+other installed plugin, and its section lives in `settings.yaml`:
+
+```yaml
+dsh-session-search:
+  resultLimit: 60        # maximum hits per query
+  indexAssistant: true   # index assistant replies as well as your prompts
+```
+
 ## Compatibility
 
 - DeepSeek Harness `0.1.x` (developed against `0.1.1-rc.2`), `web` profile.

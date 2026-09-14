@@ -12,6 +12,9 @@
  */
 import type { Context } from '@deepseek-ai/cordis'
 import { SessionIndex } from './indexer.js'
+import { settingsNamespace } from '@deepseek-ai/dsh-settings'
+import { SearchSettingsSchema } from './settings.js'
+import { SEARCH_SETTINGS_NAMESPACE } from './namespace.js'
 import type { SearchHit } from './indexer.js'
 
 const CHANNEL = '/dsh-session-search'
@@ -30,6 +33,12 @@ export const inject = ['connection', 'sessions']
 
 export function apply(ctx: Context): void {
   const log = ctx.logger('session-search')
+
+  // Registering the namespace also earns the plugin its Settings → Plugins
+  // card: that tab dispatches one card per Host-served namespace.
+  ctx.inject(['settings'], (settingsCtx) => {
+    settingsCtx.settings.register(settingsNamespace(SEARCH_SETTINGS_NAMESPACE), SearchSettingsSchema)
+  })
   const index = new SessionIndex()
 
   // Boot build from persistence (optional service: absent = live-only index).
