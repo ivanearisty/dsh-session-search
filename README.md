@@ -21,6 +21,12 @@ so you can find that command you ran three weeks ago in a session you never name
 dsh plugin --profile web add dsh-session-search
 ```
 
+Not on npm yet — until it is, install straight from GitHub:
+
+```sh
+dsh plugin --profile web add github:ivanearisty/dsh-session-search
+```
+
 Then restart the harness (the host half builds its index at boot).
 
 ## Use

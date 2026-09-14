@@ -41,7 +41,8 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsc && tsdown"
+    "build": "tsc && tsdown",
+    "prepare": "npm run build"
   },
   "dsh": {
     "bundle": {
